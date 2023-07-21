@@ -8,6 +8,8 @@ import androidx.core.app.NotificationManagerCompat;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Notification;
@@ -36,22 +38,27 @@ public class MainActivity extends AppCompatActivity {
     public void sendOnChannel1(View v) {
         String title = editTextTitle.getText().toString();
         String message = editTextMessage.getText().toString();
-        Intent activityIntent= new Intent(this,MainActivity.class);
-        PendingIntent pi=PendingIntent.getActivity(this,0,activityIntent,0);
-        Intent boardcastintent=new Intent(this, BoardCastRe.class);
-        boardcastintent.putExtra("toastMessage",message);
-        PendingIntent actionintent=PendingIntent.getBroadcast(this,0,boardcastintent,PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent activityIntent = new Intent(this, MainActivity.class);
+        PendingIntent pi = PendingIntent.getActivity(this, 0, activityIntent, 0);
+        Intent boardcastintent = new Intent(this, BoardCastRe.class);
+        boardcastintent.putExtra("toastMessage", message);
+        PendingIntent actionintent = PendingIntent.getBroadcast(this, 0, boardcastintent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.facesimleemoji);
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.baseline_cloud_24)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setLargeIcon(largeIcon)
+                .setStyle(new NotificationCompat.BigTextStyle().setSummaryText("Summary text")
+                        .setBigContentTitle("Enclopideia")
+                        .bigText(getString(R.string.long_txt)))
                 .setColor(Color.BLUE)
                 .setOnlyAlertOnce(true)
                 .setAutoCancel(true)
                 .setContentIntent(pi)
-                .addAction(R.mipmap.ic_launcher,"Reply",actionintent)
+                .addAction(R.mipmap.ic_launcher, "Reply", actionintent)
                 .build();
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -73,8 +80,25 @@ public class MainActivity extends AppCompatActivity {
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_2_ID)
                 .setSmallIcon(R.drawable.baseline_cloud_done_24)
+                .setStyle(new NotificationCompat.InboxStyle().
+                        addLine("this is line 1")
+                        .addLine("this is line 2")
+                        .addLine("this is line 3")
+                        .addLine("this is line 4")
+                        .addLine("this is line 5")
+                        .addLine("this is line 6")
+                        .addLine("this is line 7")
+                        .addLine("this is line 8")
+                        .addLine("this is line 9")
+                        .addLine("this is line 10")
+                        .addLine("this is line 11")
+                        .addLine("this is line 12")
+                        .addLine("this is line 13")
+                        .setSummaryText("Summary text")
+                        .setBigContentTitle("Enclopideia")
+                )
                 .setContentTitle(title)
-                .setContentText(message+"Second Channel")
+                .setContentText(message + "Second Channel")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .build();
 
